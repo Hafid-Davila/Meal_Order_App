@@ -1,20 +1,26 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { createStackNavigator } from 'react-navigation-stack';
+import { createAppContainer } from 'react-navigation';
+import { AppRegistry } from 'react-native';
+import Inicio from './pantallas/Inicio';
+import Orden from './pantallas/Orden';
+import ConfirmacionOrden from './pantallas/ConfirmacionOrden';
+import InicioSesionAdmin from './pantallas/InicioSesionAdmin';
+import Admin from './pantallas/Admin';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+const AppNavigator = createStackNavigator(
+  {
+    Inicio: { screen: Inicio },
+    Orden: { screen: Orden },
+    ConfirmacionOrden: { screen: ConfirmacionOrden },
+    InicioSesionAdmin: { screen: InicioSesionAdmin },
+    Admin: { screen: Admin },
   },
-});
+  {
+    initialRouteName: 'Inicio',
+  }
+);
+
+const AppContainer = createAppContainer(AppNavigator);
+export default AppContainer;
+AppRegistry.registerComponent('main', () => AppContainer);
