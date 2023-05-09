@@ -5,7 +5,7 @@ const Inicio = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Image
-        source={require('../images/BurritosOlivasLogo.png')} // Update the path to your logo file
+        source={require('../images/BurritosDonJuanLogo.png')} // Update the path to your logo file
         style={styles.logo}
       />
       <View style={styles.container}>
