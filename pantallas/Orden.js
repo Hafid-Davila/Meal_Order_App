@@ -1,92 +1,59 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import Card from './Card';
 
 const Orden = ({ navigation }) => {
   const [carrito, setCarrito] = useState([]);
 
   const agregarAlCarrito = (item) => {
-    setCarrito([...carrito, item]);
+    setCarrito((prevState) => [...prevState, item]);
   };
 
   return (
-    <ScrollView style={styles.container}>
-      <Text style={styles.title}>Menú</Text>
+    <View style={styles.container}>
+      <Card
+        item="Articulo 1"
+        onPress={() => agregarAlCarrito('Articulo 1')}
+      />
+      {/* Agregar más artículos de la misma manera */}
+      <Card
+        item="Articulo 2"
+        onPress={() => agregarAlCarrito('Articulo 2')}
+      />
+      {/* ... */}
 
-      {/* Aquí puedes agregar los elementos de tu menú */}
-      <View style={styles.card}>
-        <Text style={styles.menuItemName}>Burrito 1</Text>
-        <Text style={styles.menuItemPrice}>$9.99</Text>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => agregarAlCarrito({ name: 'Burrito 1', price: 9.99 })}
-          activeOpacity={0.7}
-        >
-          <Text style={styles.buttonText}>Agregar al carrito</Text>
-        </TouchableOpacity>
-      </View>
-      {/* Fin de los elementos de menú */}
-
+      {/* Botón para navegar a ConfirmacionOrden con el carrito actual */}
       <TouchableOpacity
-        style={styles.confirmButton}
+        style={styles.button}
         onPress={() => navigation.navigate('ConfirmacionOrden', { carrito })}
         activeOpacity={0.7}
       >
         <Text style={styles.buttonText}>Confirmación de orden</Text>
       </TouchableOpacity>
-    </ScrollView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: '#F6F5F4',
-    paddingHorizontal: 20,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginTop: 20,
-    marginBottom: 10,
-  },
-  card: {
-    backgroundColor: '#fff',
-    borderRadius: 5,
-    padding: 15,
-    marginBottom: 20,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.2,
-    shadowRadius: 5,
-    elevation: 5,
-  },
-  menuItemName: {
-    fontSize: 18,
-    marginBottom: 5,
-  },
-  menuItemPrice: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 10,
   },
   button: {
     backgroundColor: '#4CAF50',
-    padding: 10,
-    paddingHorizontal: 30,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
     borderRadius: 5,
-  },
-  confirmButton: {
-    backgroundColor: '#FFA000',
-    padding: 10,
-    paddingHorizontal: 30,
-    borderRadius: 5,
-    marginBottom: 20,
+    marginTop: 20,
   },
   buttonText: {
     color: 'white',
-    fontSize: 18,
+    fontWeight: 'bold',
   },
 });
 
 export default Orden;
+
+
