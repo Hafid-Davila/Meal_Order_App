@@ -1,20 +1,26 @@
 import React from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import { View, Button, StyleSheet, Image, TouchableOpacity, Text } from 'react-native';
 
 const Inicio = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      {/* Agregar el nombre del restaurante */}
-      <Text style={styles.restaurantName}>Burritos Olivas</Text>
-
-      <Button
-        title="Ordenar"
-        onPress={() => navigation.navigate('Orden')}
+      <Image
+        source={require('../images/BurritosOlivasLogo.png')} // Update the path to your logo file
+        style={styles.logo}
       />
-      <Button
-        title="Iniciar sesión como administrador"
-        onPress={() => navigation.navigate('InicioSesionAdmin')}
-      />
+      <View style={styles.container}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate('Orden')}
+          activeOpacity={0.7}
+        >
+          <Text style={styles.buttonText}>Ordenar</Text>
+        </TouchableOpacity>
+        <Button
+          title="Iniciar sesión como administrador"
+          onPress={() => navigation.navigate('InicioSesionAdmin')}
+        />
+      </View>
     </View>
   );
 };
@@ -23,14 +29,27 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
+    backgroundColor: '#F6F5F4',
   },
-  restaurantName: {
-    fontSize: 24, // Tamaño del texto
-    fontWeight: 'bold', // Estilo del texto en negrita
-    color: 'olive', // Color del texto
-    marginBottom: 20, // Espaciado debajo del nombre del restaurante
+  logo: {
+    width: 300, // Adjust the width according to your logo size
+    height: 300, // Adjust the height according to your logo size
+    resizeMode: 'contain', // Preserve the aspect ratio of the logo
+    marginTop:100,
+  },
+  button: {
+    backgroundColor: '#4CAF50',
+    padding: 10,
+    paddingHorizontal: 30,
+    borderRadius: 5,
+    marginVertical: 10,
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 18,
   },
 });
 
 export default Inicio;
+
