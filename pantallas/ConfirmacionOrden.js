@@ -1,22 +1,55 @@
-import React, { useEffect } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 
-const ConfirmacionOrden = ({ navigation }) => {
-  const carrito = navigation.getParam('carrito', []);
+const ConfirmacionOrden = ({ route, navigation }) => {
+  const [nombre, setNombre] = useState('');
+  const [apellido, setApellido] = useState('');
+  const [telefono, setTelefono] = useState('');
 
-  useEffect(() => {
-    if (!carrito || carrito.length === 0) {
-      navigation.goBack();
-    }
-  }, [carrito, navigation]);
+  const { carrito } = route.params;
+
+  const handleConfirmarOrden = () => {
+    navigation.navigate('DetalleOrden', { nombre, apellido, telefono, carrito });
+  };
+
+  const isFormValid = nombre !== '' && apellido !== '' && telefono !== '';
 
   return (
     <View style={styles.container}>
       <Text>Confirmación de la orden</Text>
-      {/* Renderizar los artículos del carrito aquí */}
+
+      <TextInput
+        style={styles.input}
+        placeholder="Nombre"
+        value={nombre}
+        onChangeText={setNombre}
+      />
+
+      <TextInput
+        style={styles.input}
+        placeholder="Apellido"
+        value={apellido}
+        onChangeText={setApellido}
+      />
+
+      <TextInput
+        style={styles.input}
+        placeholder="Teléfono"
+        value={telefono}
+        onChangeText={setTelefono}
+      />
+
       {carrito.map((item, index) => (
         <Text key={index}>{item}</Text>
       ))}
+
+      <TouchableOpacity 
+        style={[styles.button, !isFormValid && styles.buttonDisabled]}
+        onPress={handleConfirmarOrden}
+        disabled={!isFormValid}
+      >
+        <Text style={styles.buttonText}>Confirmar Orden</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -27,6 +60,28 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#F6F5F4',
+  },
+  input: {
+    width: '80%',
+    padding: 10,
+    borderWidth: 1,
+    borderColor: 'black',
+    marginBottom: 10,
+  },
+  button: {
+    backgroundColor: '#007BFF',
+    padding: 10,
+    borderRadius: 5,
+    marginTop: 10,
+    width: '80%',
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 16,
+  },
+  buttonDisabled: {
+    backgroundColor: '#ccc',
   },
 });
 

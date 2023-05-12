@@ -24,9 +24,14 @@ const Orden = ({ navigation }) => {
 
       {/* Botón para navegar a ConfirmacionOrden con el carrito actual */}
       <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.navigate('ConfirmacionOrden', { carrito })}
+        style={[styles.button, carrito.length === 0 ? styles.buttonDisabled : styles.buttonEnabled]}
+        onPress={() => {
+          if (carrito.length > 0) {
+            navigation.navigate('ConfirmacionOrden', { carrito });
+          }
+        }}
         activeOpacity={0.7}
+        disabled={carrito.length === 0}
       >
         <Text style={styles.buttonText}>Confirmación de orden</Text>
       </TouchableOpacity>
@@ -42,11 +47,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#F6F5F4',
   },
   button: {
-    backgroundColor: '#4CAF50',
     paddingHorizontal: 20,
     paddingVertical: 10,
     borderRadius: 5,
     marginTop: 20,
+  },
+  buttonEnabled: {
+    backgroundColor: '#4CAF50',
+  },
+  buttonDisabled: {
+    backgroundColor: 'grey',
   },
   buttonText: {
     color: 'white',

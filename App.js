@@ -1,26 +1,27 @@
 import React from 'react';
-import { createStackNavigator } from 'react-navigation-stack';
-import { createAppContainer } from 'react-navigation';
-import { AppRegistry } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 import Inicio from './pantallas/Inicio';
 import Orden from './pantallas/Orden';
 import ConfirmacionOrden from './pantallas/ConfirmacionOrden';
 import InicioSesionAdmin from './pantallas/InicioSesionAdmin';
 import Admin from './pantallas/Admin';
 
-const AppNavigator = createStackNavigator(
-  {
-    Inicio: { screen: Inicio },
-    Orden: { screen: Orden },
-    ConfirmacionOrden: { screen: ConfirmacionOrden },
-    InicioSesionAdmin: { screen: InicioSesionAdmin },
-    Admin: { screen: Admin },
-  },
-  {
-    initialRouteName: 'Inicio',
-  }
-);
 
-const AppContainer = createAppContainer(AppNavigator);
-export default AppContainer;
-AppRegistry.registerComponent('main', () => AppContainer);
+const Stack = createStackNavigator();
+
+const App = () => {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Inicio">
+        <Stack.Screen name="Inicio" component={Inicio} />
+        <Stack.Screen name="Orden" component={Orden} />
+        <Stack.Screen name="ConfirmacionOrden" component={ConfirmacionOrden} />
+        <Stack.Screen name="InicioSesionAdmin" component={InicioSesionAdmin} />
+        <Stack.Screen name="Admin" component={Admin} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+};
+
+export default App;
