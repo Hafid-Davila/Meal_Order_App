@@ -9,7 +9,7 @@ const ConfirmacionOrden = ({ route, navigation }) => {
   const { carrito } = route.params;
 
   const handleConfirmarOrden = () => {
-    navigation.navigate('DetalleOrden', { nombre, apellido, telefono, carrito });
+    navigation.navigate('DetalleTuOrden', { nombre, apellido, carrito }); // Actualización aquí
   };
 
   const isFormValid = nombre !== '' && apellido !== '' && telefono !== '';
@@ -86,4 +86,3 @@ const styles = StyleSheet.create({
 });
 
 export default ConfirmacionOrden;
-
