@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
 const DetalleTuOrden = ({ route }) => {
-  const { nombre, apellido, carrito } = route.params;
+  const { nombre, numeroOrden, carrito } = route.params;
 
   return (
     <View style={styles.container}>
@@ -12,7 +12,7 @@ const DetalleTuOrden = ({ route }) => {
 
       <Text style={styles.title}>  Tu orden estara lista en 15 minutos.</Text>
 
-      <Text style={styles.text}>Tu Orden:</Text>
+      <Text style={styles.text}>Numero de orden ({numeroOrden}) incluyegit :</Text>
       {carrito.map((item, index) => (
         <Text key={index} style={styles.text}>{item}</Text>
       ))}

@@ -1,15 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const ConfirmacionOrden = ({ route, navigation }) => {
   const [nombre, setNombre] = useState('');
   const [apellido, setApellido] = useState('');
   const [telefono, setTelefono] = useState('');
+  const [numeroOrden, setNumeroOrden] = useState(null);
 
   const { carrito } = route.params;
 
+  useEffect(() => {
+    const generarNumeroOrden = async () => {
+      try {
+        const lastOrderNumber = await AsyncStorage.getItem('lastOrderNumber');
+        const newOrderNumber = lastOrderNumber !== null ? Number(lastOrderNumber) + 1 : 1;
+        await AsyncStorage.setItem('lastOrderNumber', newOrderNumber.toString());
+        setNumeroOrden(newOrderNumber);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    generarNumeroOrden();
+  }, []);
+
   const handleConfirmarOrden = () => {
-    navigation.navigate('DetalleTuOrden', { nombre, apellido, carrito }); // Actualización aquí
+    navigation.navigate('DetalleTuOrden', { nombre, apellido, telefono, carrito, numeroOrden });
   };
 
   const isFormValid = nombre !== '' && apellido !== '' && telefono !== '';
@@ -43,7 +59,7 @@ const ConfirmacionOrden = ({ route, navigation }) => {
         <Text key={index}>{item}</Text>
       ))}
 
-      <TouchableOpacity 
+      <TouchableOpacity
         style={[styles.button, !isFormValid && styles.buttonDisabled]}
         onPress={handleConfirmarOrden}
         disabled={!isFormValid}
@@ -84,5 +100,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#ccc',
   },
 });
+
 
 export default ConfirmacionOrden;
