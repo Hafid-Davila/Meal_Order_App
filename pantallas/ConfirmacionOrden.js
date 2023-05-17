@@ -13,10 +13,25 @@ const ConfirmacionOrden = ({ route, navigation }) => {
   useEffect(() => {
     const generarNumeroOrden = async () => {
       try {
+        const lastOrderDate = await AsyncStorage.getItem('lastOrderDate');
         const lastOrderNumber = await AsyncStorage.getItem('lastOrderNumber');
-        const newOrderNumber = lastOrderNumber !== null ? Number(lastOrderNumber) + 1 : 1;
+        const today = new Date().toISOString().split('T')[0];  // obtenemos la fecha de hoy
+
+        let newOrderNumber;
+        if (lastOrderDate !== today) {
+          // si la fecha del último pedido no es hoy, reiniciamos el número de pedido
+          newOrderNumber = 1;
+        } else {
+          // de lo contrario, incrementamos el número de pedido
+          newOrderNumber = lastOrderNumber !== null ? Number(lastOrderNumber) + 1 : 1;
+        }
+
+        // almacenamos la fecha de hoy y el nuevo número de pedido
+        await AsyncStorage.setItem('lastOrderDate', today);
         await AsyncStorage.setItem('lastOrderNumber', newOrderNumber.toString());
-        setNumeroOrden(newOrderNumber);
+
+        // rellenamos el número de pedido con ceros a la izquierda para que tenga tres dígitos
+        setNumeroOrden(newOrderNumber.toString().padStart(3, '0'));
       } catch (error) {
         console.error(error);
       }
@@ -32,7 +47,8 @@ const ConfirmacionOrden = ({ route, navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text>Confirmación de la orden</Text>
+      <Text style={styles.title}>Confirmación de la orden</Text>
+
 
       <TextInput
         style={styles.input}
@@ -56,8 +72,11 @@ const ConfirmacionOrden = ({ route, navigation }) => {
       />
 
       {carrito.map((item, index) => (
-        <Text key={index}>{item}</Text>
+        <View key={index}>
+          <Text style={styles.itemText}>{item.name} ${item.price}</Text>
+        </View>
       ))}
+
 
       <TouchableOpacity
         style={[styles.button, !isFormValid && styles.buttonDisabled]}
@@ -77,6 +96,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#F6F5F4',
   },
+
+  title: {
+    fontWeight: 'bold',
+    color: 'green',
+    fontSize: 24,
+  },
+
   input: {
     width: '80%',
     padding: 10,
@@ -92,6 +118,14 @@ const styles = StyleSheet.create({
     width: '80%',
     alignItems: 'center',
   },
+
+  itemText: {
+    color: 'red',  // Aquí pones el color que quieras
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+
+
   buttonText: {
     color: '#fff',
     fontSize: 16,
@@ -101,5 +135,6 @@ const styles = StyleSheet.create({
   },
 });
 
-
 export default ConfirmacionOrden;
+
+

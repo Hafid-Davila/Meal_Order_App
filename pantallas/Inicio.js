@@ -11,10 +11,10 @@ const Inicio = ({ navigation }) => {
       <View style={styles.container}>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate('Orden')}
+          onPress={() => navigation.navigate('Menu')}
           activeOpacity={0.7}
         >
-          <Text style={styles.buttonText}>Ordenar</Text>
+          <Text style={styles.buttonText}>Menú</Text>
         </TouchableOpacity>
         <Button
           title="Iniciar sesión como administrador"

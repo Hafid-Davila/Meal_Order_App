@@ -2,7 +2,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Inicio from './pantallas/Inicio';
-import Orden from './pantallas/Orden';
+import Menu from './pantallas/Menu';
 import ConfirmacionOrden from './pantallas/ConfirmacionOrden';
 import InicioSesionAdmin from './pantallas/InicioSesionAdmin';
 import Admin from './pantallas/Admin';
@@ -16,7 +16,7 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Inicio">
         <Stack.Screen name="Inicio" component={Inicio} />
-        <Stack.Screen name="Orden" component={Orden} />
+        <Stack.Screen name="Menu" component={Menu} />
         <Stack.Screen name="ConfirmacionOrden" component={ConfirmacionOrden} />
         <Stack.Screen name="DetalleTuOrden" component={DetalleTuOrden} />
         <Stack.Screen name="InicioSesionAdmin" component={InicioSesionAdmin} />
